@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Reaction Time</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">From the Square world,\nHello, %1$s!</string>
+
+    <!--Result Screens-->
+    <string name="tooFast">Too Fast</string>
+
+    <!--Race Start Screen-->
+    <string name="raceStartTitle">Race Start</string>
+</resources>
