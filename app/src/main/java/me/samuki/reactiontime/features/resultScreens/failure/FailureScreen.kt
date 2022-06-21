@@ -8,14 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.wear.compose.material.Text
-import me.samuki.reactiontime.R
 import me.samuki.reactiontime.features.home.presentation.HomeDestination
 import me.samuki.reactiontime.features.resultScreens.ResultNavigationButtons
 import me.samuki.reactiontime.presentation.theme.ReactionTimeTheme
@@ -27,10 +24,16 @@ fun FailureScreen(navController: NavController) {
 
     FailureContent(
         onCancel = {
-            navController.navigate(HomeDestination.routeHome, navOptions = NavOptions.Builder().setLaunchSingleTop(true).build())
+            navController.navigate(HomeDestination.routeHome) {
+                popUpTo(0)
+            }
         },
         onRetry = {
-            retryRoute?.let { navController.navigate(retryRoute) }
+            retryRoute?.let {
+                navController.navigate(it) {
+                    popUpTo(HomeDestination.routeHome)
+                }
+            }
         },
     )
 }
@@ -38,7 +41,8 @@ fun FailureScreen(navController: NavController) {
 @Composable
 fun FailureContent(onCancel: () -> Unit, onRetry: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(Color(0xff9e2d3f)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

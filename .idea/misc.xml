@@ -6,6 +6,7 @@
         <entry key="app/src/main/java/me/samuki/reactiontime/features/home/presentation/HomeScreen.kt" value="0.9" />
         <entry key="app/src/main/java/me/samuki/reactiontime/features/home/presentation/list/ReactionCell.kt" value="1.1380208333333333" />
         <entry key="app/src/main/java/me/samuki/reactiontime/features/raceStart/presentation/RaceStartScreen.kt" value="1.1770833333333333" />
+        <entry key="app/src/main/java/me/samuki/reactiontime/features/resultScreens/failure/FailureScreen.kt" value="0.8616504854368932" />
         <entry key="app/src/main/java/me/samuki/reactiontime/presentation/MainActivity.kt" value="0.8188405797101449" />
         <entry key="app/src/main/java/me/samuki/reactiontime/presentation/success/SuccessScreen.kt" value="0.8188405797101449" />
         <entry key="app/src/main/java/me/samuki/reactiontime/raceStart/presentation/RaceStartScreen.kt" value="0.8236714975845411" />

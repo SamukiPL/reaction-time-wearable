@@ -35,7 +35,7 @@ fun ReactionCell(model: ReactionModel, onClick: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_race_start),
+                painter = painterResource(id = model.icon),
                 contentDescription = "",
                 modifier = Modifier
                     .width(40.dp)
@@ -57,6 +57,6 @@ fun PreviewReactionCell() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ReactionCell(model = ReactionModel(R.string.raceStartTitle, "Test")) {}
+        ReactionCell(model = ReactionModel(R.string.raceStartTitle, R.drawable.ic_race_start, "Test")) {}
     }
 }

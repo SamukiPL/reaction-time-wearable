@@ -4,9 +4,9 @@ import me.samuki.reactiontime.data.reaction.ReactionTimeDataSource
 import me.samuki.reactiontime.data.reaction.ReactionTimeFormatter
 import me.samuki.reactiontime.features.home.domain.HomeProvider
 import me.samuki.reactiontime.features.home.domain.ReactionModel
+import me.samuki.reactiontime.features.home.domain.TimesModel
 import me.samuki.reactiontime.presentation.Destination
 import me.samuki.reactiontime.presentation.ReactionDestination
-import me.samuki.reactiontime.util.EMPTY_STRING
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,20 +16,27 @@ class HomeProviderImpl @Inject constructor(
     private val formatter: ReactionTimeFormatter,
     private val destinations: Set<@JvmSuppressWildcards Destination>,
 ) : HomeProvider {
-    override suspend fun getAverageTime(): String {
+    override suspend fun getTimes(): TimesModel? {
         val averageTime = reactionTimeDataSource.getAverageTime()
+        val bestTime = reactionTimeDataSource.getBestTime()
         return if (averageTime >= 0) {
-            formatter.format(averageTime)
+            TimesModel(
+                averageTime = formatter.format(averageTime),
+                bestTime = formatter.format(bestTime)
+            )
         } else {
-            EMPTY_STRING
+            null
         }
     }
 
     override suspend fun getReactionsList(): List<ReactionModel> {
         val reactionDestinations = destinations.filterIsInstance<ReactionDestination>()
-        return reactionDestinations.map { ReactionModel(
-            name = it.screenName,
-            route = it.routeName
-        ) }
+        return reactionDestinations.map {
+            ReactionModel(
+                name = it.screenName,
+                icon = it.screenIcon,
+                route = it.routeName
+            )
+        }
     }
 }

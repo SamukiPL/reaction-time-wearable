@@ -9,9 +9,9 @@ package me.samuki.reactiontime.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.samuki.reactiontime.features.home.presentation.HomeDestination
 import me.samuki.reactiontime.presentation.theme.ReactionTimeTheme
@@ -25,9 +25,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
+            val navController = rememberSwipeDismissableNavController()
             ReactionTimeTheme {
-                NavHost(
+                SwipeDismissableNavHost(
                     navController = navController,
                     startDestination = HomeDestination.routeHome
                 ) {

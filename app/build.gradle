@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "me.samuki.reactiontime"
-        minSdk 30
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -72,7 +72,10 @@ dependencies {
 
     implementation 'com.github.SamukiPL:composable-event:1.0.0-alpha02'
 
-    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist"
+
+    implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
 
     implementation "com.google.dagger:hilt-android:2.41"
     kapt "com.google.dagger:hilt-compiler:2.41"
