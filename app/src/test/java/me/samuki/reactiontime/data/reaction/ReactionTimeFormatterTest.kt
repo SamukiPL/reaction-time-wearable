@@ -5,8 +5,10 @@ import io.kotest.matchers.shouldBe
 
 class ReactionTimeFormatterTest : BehaviorSpec({
 
+    lateinit var underTest: ReactionTimeFormatter
+
     given("ReactionTimeFormatter") {
-        val underTest = ReactionTimeFormatter()
+        underTest = ReactionTimeFormatter()
 
         and("timestamp is 333 milliseconds") {
             val timestamp = 333L

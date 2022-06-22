@@ -7,33 +7,36 @@ import javax.inject.Inject
 class ReactionTimeDataSource @Inject constructor(
     private val prefs: SharedPreferences
 ) {
-    fun saveTime(time: Long) {
-        saveAverageTime(time)
+    fun saveTime(time: Long, testsCount: Int) {
+        saveAverageTime(time, testsCount)
         manageBestTime(time)
     }
 
-    fun getAverageTime(): Long {
-        return prefs.getLong(AVERAGE_TIME_KEY, -1)
-    }
+    var averageTime: Long
+        get() = prefs.getLong(AVERAGE_TIME_KEY, -1)
+        private set(value) = prefs.edit(commit = true) {
+            putLong(AVERAGE_TIME_KEY, value)
+        }
 
-    fun getBestTime(): Long {
-        return prefs.getLong(BEST_TIME_KEY, -1)
-    }
+    var bestTime: Long
+        get() = prefs.getLong(BEST_TIME_KEY, -1)
+        private set(value) = prefs.edit(commit = true) {
+            putLong(BEST_TIME_KEY, value)
+        }
 
-    private fun saveAverageTime(time: Long) {
-        val lastTime = getAverageTime()
-        val averageTime = (time + lastTime) / 2
-        prefs.edit(commit = true) {
-            putLong(AVERAGE_TIME_KEY, averageTime)
+    fun saveAverageTime(time: Long, testsCount: Int) {
+        averageTime = if (testsCount == 1) {
+            time
+        } else {
+            val lastTime = averageTime * (testsCount - 1)
+            (time + lastTime) / testsCount
         }
     }
 
     private fun manageBestTime(time: Long) {
-        val lastBest = getBestTime()
+        val lastBest = bestTime
         if (time < lastBest || lastBest == -1L) {
-            prefs.edit(commit = true) {
-                putLong(BEST_TIME_KEY, time)
-            }
+            bestTime = time
         }
     }
 
