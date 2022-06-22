@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import me.samuki.reactiontime.features.home.domain.GetAverageTimeUseCase
+import me.samuki.reactiontime.features.home.domain.DashboardTileModel
+import me.samuki.reactiontime.features.home.domain.GetDashboardTilesUseCase
 import me.samuki.reactiontime.features.home.domain.GetReactionsListUseCase
 import me.samuki.reactiontime.features.home.domain.ReactionModel
 import me.samuki.reactiontime.util.ext.update
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAverageTimeUseCase: GetAverageTimeUseCase,
+    private val getAverageTimeUseCase: GetDashboardTilesUseCase,
     private val getReactionsListUseCase: GetReactionsListUseCase
 ) : ViewModel() {
 
@@ -23,11 +24,10 @@ class HomeViewModel @Inject constructor(
 
     fun checkAverageTime() {
         viewModelScope.launch {
-            val averageTime = getAverageTimeUseCase()
+            val tiles = getAverageTimeUseCase()
             _viewState.update {
                 it.copy(
-                    averageTime = averageTime,
-                    averageTimeVisible = averageTime.isNotEmpty()
+                    dashboardTiles = tiles
                 )
             }
         }
@@ -43,8 +43,9 @@ class HomeViewModel @Inject constructor(
     }
 
     data class ViewState(
-        val averageTime: String = "",
-        val averageTimeVisible: Boolean = false,
+        val dashboardTiles: List<DashboardTileModel> = emptyList(),
         val reactionsList: List<ReactionModel> = emptyList()
-    )
+    ) {
+        val areTilesVisible get() = dashboardTiles.isNotEmpty()
+    }
 }

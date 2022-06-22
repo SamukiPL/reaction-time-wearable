@@ -11,4 +11,10 @@
 
     <!--Race Start Screen-->
     <string name="raceStartTitle">Race Start</string>
+
+    <!--Color Change Screen-->
+    <string name="colorChangeTitle">Color Change</string>
+
+    <!--Stopwatch Screen-->
+    <string name="stopwatchTitle">Stopwatch</string>
 </resources>

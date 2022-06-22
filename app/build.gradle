@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "me.samuki.reactiontime"
-        minSdk 30
+        minSdk 26
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0-alpha01"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -72,7 +72,10 @@ dependencies {
 
     implementation 'com.github.SamukiPL:composable-event:1.0.0-alpha02'
 
-    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist"
+
+    implementation "androidx.wear.compose:compose-navigation:$wear_compose_version"
 
     implementation "com.google.dagger:hilt-android:2.41"
     kapt "com.google.dagger:hilt-compiler:2.41"
@@ -80,4 +83,6 @@ dependencies {
 
     testImplementation "io.kotest:kotest-runner-junit5-jvm:5.3.1"
     testImplementation "io.kotest:kotest-assertions-core-jvm:5.3.1"
+    testImplementation "io.mockk:mockk:1.12.4"
+    testImplementation "io.mockk:mockk-agent-jvm:1.12.4"
 }

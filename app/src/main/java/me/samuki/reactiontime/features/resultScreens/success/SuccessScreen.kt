@@ -24,10 +24,16 @@ fun SuccessScreen(navController: NavController) {
     SuccessContent(
         result = result,
         onCancel = {
-            navController.navigate(HomeDestination.routeHome)
+            navController.navigate(HomeDestination.routeHome) {
+                popUpTo(0)
+            }
         },
         onRetry = {
-            retryRoute?.let { navController.navigate(it) }
+            retryRoute?.let {
+                navController.navigate(it) {
+                    popUpTo(HomeDestination.routeHome)
+                }
+            }
         },
     )
 }

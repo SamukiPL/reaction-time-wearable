@@ -12,6 +12,7 @@ import javax.inject.Singleton
 class ReactionRecorderImpl @Inject constructor(
     private val stopwatch: Stopwatch,
     private val reactionTimeDataSource: ReactionTimeDataSource,
+    private val testCountDataSource: TestCountDataSource,
     private val formatter: ReactionTimeFormatter
 ) : ReactionRecorder {
     private var observationType: ObservationType = ObservationType.Idle
@@ -37,7 +38,10 @@ class ReactionRecorderImpl @Inject constructor(
         _reactionStatus.emit(
             when (observationType) {
                 ObservationType.Idle -> ReactionStatus.Awaiting
-                ObservationType.PreMature -> ReactionStatus.Premature
+                ObservationType.PreMature -> {
+                    saveFailure()
+                    ReactionStatus.Premature
+                }
                 ObservationType.Correct -> {
                     ReactionStatus.Recorded(time = saveTime())
                 }
@@ -45,9 +49,15 @@ class ReactionRecorderImpl @Inject constructor(
         )
     }
 
+    private fun saveFailure() {
+        testCountDataSource.incrementFailuresAndTestCount()
+    }
+
     private fun saveTime(): String {
+        val testsCount = testCountDataSource.incrementTestsCount()
+
         val time = stopwatch.stop()
-        reactionTimeDataSource.saveTime(time)
+        reactionTimeDataSource.saveTime(time, testsCount)
         return formatter.format(time)
     }
 }

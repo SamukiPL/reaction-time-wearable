@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.wear.compose.material.MaterialTheme
+import me.samuki.reactiontime.features.home.presentation.HomeDestination
 import me.samuki.reactiontime.features.resultScreens.failure.FailureDestination
 import me.samuki.reactiontime.features.resultScreens.success.SuccessDestination
 
@@ -28,11 +29,15 @@ fun RaceStartScreen(
         when (it) {
             RaceStartViewModel.ViewEvent.Failure -> {
                 val route = FailureDestination.navigate(RaceStartDestination.routeRaceStart)
-                navController.navigate(route)
+                navController.navigate(route) {
+                    popUpTo(HomeDestination.routeHome)
+                }
             }
             is RaceStartViewModel.ViewEvent.Success -> {
                 val route = SuccessDestination.navigate(RaceStartDestination.routeRaceStart, it.result)
-                navController.navigate(route)
+                navController.navigate(route) {
+                    popUpTo(HomeDestination.routeHome)
+                }
             }
         }
     }
