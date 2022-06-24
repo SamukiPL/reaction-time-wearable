@@ -14,6 +14,7 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.samuki.reactiontime.features.home.presentation.HomeDestination
+import me.samuki.reactiontime.navigation.AppNavigation
 import me.samuki.reactiontime.presentation.theme.ReactionTimeTheme
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberSwipeDismissableNavController()
+            val navigation = AppNavigation(navController)
             ReactionTimeTheme {
                 SwipeDismissableNavHost(
                     navController = navController,
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     destinations.forEach { destination ->
                         composable(destination.routeName, arguments = destination.arguments) {
-                            destination.BuildDestination(navController = navController)
+                            destination.BuildDestination(navigation = navigation)
                         }
                     }
                 }

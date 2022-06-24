@@ -2,6 +2,6 @@ package me.samuki.reactiontime.features.raceStart.domain
 
 import kotlinx.coroutines.flow.Flow
 
-interface LightsProvider {
+interface RaceStartProvider {
     suspend fun observeLights(): Flow<RaceStartModel>
 }

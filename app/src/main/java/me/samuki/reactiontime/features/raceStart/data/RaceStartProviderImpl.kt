@@ -1,10 +1,12 @@
 package me.samuki.reactiontime.features.raceStart.data
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import me.samuki.reactiontime.domain.reaction.ReactionRecorder
-import me.samuki.reactiontime.features.raceStart.domain.LightsProvider
 import me.samuki.reactiontime.features.raceStart.domain.RaceStartModel
+import me.samuki.reactiontime.features.raceStart.domain.RaceStartProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
@@ -12,18 +14,18 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @Singleton
-class LightsProviderImpl @Inject constructor(
+class RaceStartProviderImpl @Inject constructor(
     private val reactionRecorder: ReactionRecorder,
     private val random: Random
-) : LightsProvider {
+) : RaceStartProvider {
     override suspend fun observeLights(): Flow<RaceStartModel> {
         reactionRecorder.resetRecording()
-        return lightsFlow().combine(reactionRecorder.reactionStatus) { lightsOn, reactionStatus ->
-            RaceStartModel(lightsOn, reactionStatus)
+        return lightsLightingFlow().map { lightsOn ->
+            RaceStartModel(lightsOn)
         }
     }
 
-    private fun lightsFlow() = flow {
+    private fun lightsLightingFlow() = flow {
         delay(1000)
         emit(1)
 

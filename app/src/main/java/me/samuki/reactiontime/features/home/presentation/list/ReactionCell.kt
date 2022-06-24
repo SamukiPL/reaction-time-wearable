@@ -24,9 +24,10 @@ fun ReactionCell(model: ReactionModel, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .clickable { onClick() }
+            .fillMaxWidth()
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.Start
     ) {
         Box(
             modifier = Modifier
@@ -57,6 +58,12 @@ fun PreviewReactionCell() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ReactionCell(model = ReactionModel(R.string.raceStartTitle, R.drawable.ic_race_start, "Test")) {}
+        ReactionCell(
+            model = ReactionModel(
+                R.string.raceStartTitle,
+                R.drawable.ic_race_start,
+                "Test"
+            )
+        ) {}
     }
 }

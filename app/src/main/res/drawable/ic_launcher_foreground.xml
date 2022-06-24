@@ -3,7 +3,8 @@
     android:height="128dp"
     android:viewportWidth="512"
     android:viewportHeight="512">
-    <group android:scaleY="0.5"
+    <group
+        android:scaleY="0.5"
         android:scaleX="0.5"
         android:pivotX="256"
         android:pivotY="256">

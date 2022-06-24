@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetDashboardTilesUseCase @Inject constructor(
     ioCoroutineContext: IoCoroutineContext,
     private val homeProvider: HomeProvider
-) : UseCase(ioCoroutineContext.context){
+) : UseCase(ioCoroutineContext.context) {
     suspend operator fun invoke() = withContext(context) {
         homeProvider.getTiles()
     }
