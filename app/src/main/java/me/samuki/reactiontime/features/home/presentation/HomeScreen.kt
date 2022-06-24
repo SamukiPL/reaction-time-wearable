@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.wear.compose.material.*
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -27,7 +26,7 @@ import me.samuki.reactiontime.features.home.presentation.list.ReactionCell
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navController: NavController
+    homeNavigation: HomeNavigation
 ) {
     LaunchedEffect(Unit) {
         viewModel.checkAverageTime()
@@ -41,7 +40,7 @@ fun HomeScreen(
         reactionsCount = viewState.reactionsList.size,
         reactionsList = viewState.reactionsList
     ) { route ->
-        navController.navigate(route)
+        homeNavigation.goToTest(route)
     }
 }
 
@@ -57,6 +56,7 @@ fun HomeContent(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         autoCentering = AutoCenteringParams(itemIndex = 0),
+        contentPadding = PaddingValues(0.dp)
     ) {
         if (areTilesVisible) {
             item {

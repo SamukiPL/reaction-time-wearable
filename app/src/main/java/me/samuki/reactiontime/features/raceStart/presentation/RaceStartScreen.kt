@@ -11,34 +11,27 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.wear.compose.material.MaterialTheme
-import me.samuki.reactiontime.features.home.presentation.HomeDestination
-import me.samuki.reactiontime.features.resultScreens.failure.FailureDestination
-import me.samuki.reactiontime.features.resultScreens.success.SuccessDestination
+import me.samuki.reactiontime.features.baseReaction.ReactionNavigation
+import me.samuki.reactiontime.features.baseReaction.ReactionViewModel
 
 @Composable
 fun RaceStartScreen(
     viewModel: RaceStartViewModel = hiltViewModel(),
-    navController: NavController
+    reactionNavigation: ReactionNavigation
 ) {
     LaunchedEffect(Unit) {
         viewModel.startLights()
     }
-    viewModel.viewEvent {
+    viewModel.reactionEvent {
         when (it) {
-            RaceStartViewModel.ViewEvent.Failure -> {
-                val route = FailureDestination.navigate(RaceStartDestination.routeRaceStart)
-                navController.navigate(route) {
-                    popUpTo(HomeDestination.routeHome)
-                }
-            }
-            is RaceStartViewModel.ViewEvent.Success -> {
-                val route = SuccessDestination.navigate(RaceStartDestination.routeRaceStart, it.result)
-                navController.navigate(route) {
-                    popUpTo(HomeDestination.routeHome)
-                }
-            }
+            ReactionViewModel.ReactionEvent.Failure -> reactionNavigation.goToFailure(
+                RaceStartDestination.routeRaceStart
+            )
+            is ReactionViewModel.ReactionEvent.Success -> reactionNavigation.goToSuccess(
+                RaceStartDestination.routeRaceStart,
+                it.result
+            )
         }
     }
 
@@ -46,7 +39,7 @@ fun RaceStartScreen(
     RaceStartContent(
         lightsOn = viewState.lightsOn,
     ) {
-        viewModel.reactToLights()
+        viewModel.react()
     }
 }
 
@@ -73,7 +66,12 @@ fun RaceStartContent(
 @Composable
 fun Light(turnedOn: Boolean) {
     val color = if (turnedOn) Color.Red else MaterialTheme.colors.background
-    Box(modifier = Modifier.background(color).height(32.dp).width(32.dp)) {
+    Box(
+        modifier = Modifier
+            .background(color)
+            .height(32.dp)
+            .width(32.dp)
+    ) {
 
     }
 }

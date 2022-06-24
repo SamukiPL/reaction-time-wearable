@@ -2,9 +2,9 @@ package me.samuki.reactiontime.features.resultScreens.success
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import me.samuki.reactiontime.navigation.AppNavigation
 import me.samuki.reactiontime.presentation.Destination
 import javax.inject.Inject
 
@@ -20,8 +20,8 @@ class SuccessDestination @Inject constructor() : Destination {
     )
 
     @Composable
-    override fun BuildDestination(navController: NavController) {
-        SuccessScreen(navController)
+    override fun BuildDestination(navigation: AppNavigation) {
+        SuccessScreen(resultNavigation = navigation)
     }
 
     companion object {

@@ -9,31 +9,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.wear.compose.material.Text
-import me.samuki.reactiontime.features.home.presentation.HomeDestination
+import me.samuki.reactiontime.features.resultScreens.ResultNavigation
 import me.samuki.reactiontime.features.resultScreens.ResultNavigationButtons
 import me.samuki.reactiontime.presentation.theme.ReactionTimeTheme
 import me.samuki.reactiontime.util.ext.getString
 
 @Composable
-fun SuccessScreen(navController: NavController) {
-    val retryRoute = navController.getString(SuccessDestination.successTryAgain)
-    val result = navController.getString(SuccessDestination.successResult) ?: ""
+fun SuccessScreen(resultNavigation: ResultNavigation) {
+    val retryRoute = resultNavigation.navController.getString(SuccessDestination.successTryAgain)
+    val result = resultNavigation.navController.getString(SuccessDestination.successResult) ?: ""
 
     SuccessContent(
         result = result,
         onCancel = {
-            navController.navigate(HomeDestination.routeHome) {
-                popUpTo(0)
-            }
+            resultNavigation.goToHome()
         },
         onRetry = {
             retryRoute?.let {
-                navController.navigate(it) {
-                    popUpTo(HomeDestination.routeHome)
-                }
-            }
+                resultNavigation.goForRetry(retryRoute)
+            } ?: resultNavigation.goToHome()
         },
     )
 }
