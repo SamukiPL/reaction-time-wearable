@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/java/me/samuki/reactiontime/features/colorChange/presentation/ColorChangeScreen.kt" value="1.1380208333333333" />
         <entry key="app/src/main/java/me/samuki/reactiontime/features/home/presentation/HomeScreen.kt" value="0.9" />
         <entry key="app/src/main/java/me/samuki/reactiontime/features/home/presentation/list/ReactionCell.kt" value="1.1380208333333333" />
         <entry key="app/src/main/java/me/samuki/reactiontime/features/raceStart/presentation/RaceStartScreen.kt" value="1.1770833333333333" />

@@ -1,15 +1,15 @@
-package me.samuki.reactiontime.features.raceStart.domain
+package me.samuki.reactiontime.features.colorChange.domain
 
 import kotlinx.coroutines.withContext
 import me.samuki.reactiontime.domain.UseCase
 import me.samuki.reactiontime.io.IoCoroutineContext
 import javax.inject.Inject
 
-class GetRaceStartUseCase @Inject constructor(
+class ObserveColorChangeUseCase @Inject constructor(
     ioCoroutineContext: IoCoroutineContext,
-    private val raceStartProvider: RaceStartProvider
+    private val colorChangeProvider: ColorChangeProvider
 ) : UseCase(ioCoroutineContext.context) {
     suspend operator fun invoke() = withContext(context) {
-        raceStartProvider.observeLights()
+        colorChangeProvider.observeColorChange()
     }
 }

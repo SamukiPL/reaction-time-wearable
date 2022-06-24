@@ -2,10 +2,9 @@ package me.samuki.reactiontime.features.resultScreens.failure
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import dagger.multibindings.IntoSet
+import me.samuki.reactiontime.navigation.AppNavigation
 import me.samuki.reactiontime.presentation.Destination
 import javax.inject.Inject
 
@@ -18,8 +17,8 @@ class FailureDestination @Inject constructor() : Destination {
     )
 
     @Composable
-    override fun BuildDestination(navController: NavController) {
-        FailureScreen(navController)
+    override fun BuildDestination(navigation: AppNavigation) {
+        FailureScreen(navigation)
     }
 
     companion object {

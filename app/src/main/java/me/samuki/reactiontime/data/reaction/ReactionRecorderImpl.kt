@@ -1,7 +1,5 @@
 package me.samuki.reactiontime.data.reaction
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import me.samuki.reactiontime.domain.reaction.ObservationType
 import me.samuki.reactiontime.domain.reaction.ReactionRecorder
 import me.samuki.reactiontime.domain.reaction.ReactionStatus
@@ -17,9 +15,6 @@ class ReactionRecorderImpl @Inject constructor(
 ) : ReactionRecorder {
     private var observationType: ObservationType = ObservationType.Idle
 
-    private val _reactionStatus = MutableStateFlow<ReactionStatus>(ReactionStatus.Awaiting)
-    override val reactionStatus: StateFlow<ReactionStatus> = _reactionStatus
-
     override suspend fun resetRecording() {
         observationType = ObservationType.Idle
         recordReaction()
@@ -34,19 +29,18 @@ class ReactionRecorderImpl @Inject constructor(
         stopwatch.start()
     }
 
-    override suspend fun recordReaction() {
-        _reactionStatus.emit(
-            when (observationType) {
-                ObservationType.Idle -> ReactionStatus.Awaiting
-                ObservationType.PreMature -> {
-                    saveFailure()
-                    ReactionStatus.Premature
-                }
-                ObservationType.Correct -> {
-                    ReactionStatus.Recorded(time = saveTime())
-                }
+    override suspend fun recordReaction(): ReactionStatus {
+        return when (observationType) {
+            ObservationType.Idle -> ReactionStatus.Awaiting
+            ObservationType.PreMature -> {
+                saveFailure()
+                ReactionStatus.Premature
             }
-        )
+            ObservationType.Correct -> {
+                ReactionStatus.Recorded(time = saveTime())
+            }
+        }
+
     }
 
     private fun saveFailure() {
